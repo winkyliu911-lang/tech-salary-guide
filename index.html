@@ -3,588 +3,255 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>互联网大厂薪资 & 年终奖绩效对照表（2025）</title>
-<meta name="description" content="覆盖18家中国主流科技公司的薪资结构、绩效体系及年终奖月数对照，数据经多源交叉验证。">
-
-<!-- Structured Data for AI/Machine readability -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Dataset",
-  "name": "中国互联网大厂薪资与年终奖绩效对照表（2025）",
-  "description": "覆盖18家中国主流科技公司的薪资结构、绩效体系及年终奖月数对照",
-  "dateModified": "2025-12",
-  "license": "https://creativecommons.org/licenses/by-nc/4.0/",
-  "creator": { "@type": "Organization", "name": "公开媒体及社区数据汇编" }
-}
-</script>
-
+<title>互联网大厂薪资与年终奖绩效对照表（2025）</title>
 <style>
-  :root {
-    --bg: #0f1117; --card: #1a1d2e; --card-hover: #222640;
-    --border: #2a2e45; --text: #e4e6f0; --dim: #8b8fa8;
-    --accent: #6c5ce7; --accent-l: #a29bfe;
-    --green: #00cec9; --orange: #fdcb6e; --red: #fd7979;
-    --blue: #74b9ff; --pink: #fd79a8;
-  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-    background: var(--bg); color: var(--text); line-height: 1.6;
-  }
-  .hero {
-    text-align: center; padding: 50px 20px 36px;
-    background: linear-gradient(135deg, #1a1d2e 0%, #2d1b69 50%, #1a1d2e 100%);
-    border-bottom: 1px solid var(--border);
-  }
-  .hero h1 {
-    font-size: 2.2em; font-weight: 700;
-    background: linear-gradient(135deg, var(--accent-l), var(--green));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
-  .hero p { color: var(--dim); max-width: 700px; margin: 10px auto 0; }
-  .tag {
-    display: inline-block; margin-top: 14px; padding: 4px 14px;
-    border-radius: 20px; background: rgba(108,92,231,.2);
-    border: 1px solid var(--accent); color: var(--accent-l); font-size: .85em;
-  }
-  .container { max-width: 1440px; margin: 0 auto; padding: 28px 20px; }
-
-  /* Stats */
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 28px; }
-  .s-card {
-    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-    padding: 18px; text-align: center;
-  }
-  .s-card .n {
-    font-size: 1.8em; font-weight: 700;
-    background: linear-gradient(135deg, var(--accent-l), var(--green));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
-  .s-card .l { color: var(--dim); font-size: .88em; margin-top: 2px; }
-
-  /* Controls */
-  .controls { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; align-items: center; }
-  .controls label { color: var(--dim); font-size: .9em; }
-  .fbtn {
-    padding: 5px 14px; border-radius: 18px; border: 1px solid var(--border);
-    background: transparent; color: var(--dim); cursor: pointer; font-size: .86em;
-    transition: all .2s;
-  }
-  .fbtn:hover { border-color: var(--accent); color: var(--accent-l); }
-  .fbtn.on { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .sbox {
-    margin-left: auto; padding: 7px 14px; border-radius: 18px;
-    border: 1px solid var(--border); background: var(--card); color: var(--text);
-    font-size: .9em; outline: none; width: 180px;
-  }
-  .sbox:focus { border-color: var(--accent); }
-  .sbox::placeholder { color: var(--dim); }
-
-  /* Correction log */
-  .corrections {
-    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-    padding: 18px 22px; margin-bottom: 24px;
-  }
-  .corrections summary {
-    cursor: pointer; font-weight: 600; color: var(--accent-l); font-size: .95em;
-  }
-  .corrections .cl { margin-top: 12px; font-size: .88em; color: var(--dim); line-height: 1.8; }
-  .corrections .cl li { margin-left: 16px; }
-  .corrections .cl .fix { color: var(--green); }
-  .corrections .cl .old { color: var(--red); text-decoration: line-through; }
-
-  /* Main table */
-  .tw { overflow-x: auto; border-radius: 14px; border: 1px solid var(--border); background: var(--card); }
-  table { width: 100%; border-collapse: collapse; min-width: 1200px; }
-  thead th {
-    background: #1e2235; padding: 12px 14px; text-align: left;
-    font-weight: 600; font-size: .84em; color: var(--dim);
-    border-bottom: 2px solid var(--border); white-space: nowrap;
-    position: sticky; top: 0; z-index: 2; cursor: pointer;
-    user-select: none; transition: color .2s;
-  }
-  thead th:hover { color: var(--accent-l); }
-  thead th .si { margin-left: 3px; font-size: .75em; opacity: .4; }
-  thead th.sorted .si { opacity: 1; color: var(--green); }
-  tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
-  tbody tr:hover { background: var(--card-hover); }
-  tbody tr:last-child { border-bottom: none; }
-  td { padding: 12px 14px; font-size: .9em; vertical-align: top; }
-
-  .co { display: flex; align-items: center; gap: 9px; min-width: 110px; }
-  .logo {
-    width: 34px; height: 34px; border-radius: 9px;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: .8em; flex-shrink: 0; color: #fff;
-  }
-  .cn { font-weight: 600; white-space: nowrap; }
-  .ce { color: var(--dim); font-size: .78em; }
-
-  .b {
-    display: inline-block; padding: 2px 9px; border-radius: 10px;
-    font-size: .82em; font-weight: 500; white-space: nowrap;
-  }
-  .b-g { background: rgba(0,206,201,.15); color: var(--green); }
-  .b-b { background: rgba(116,185,255,.15); color: var(--blue); }
-  .b-p { background: rgba(108,92,231,.15); color: var(--accent-l); }
-  .b-o { background: rgba(253,203,110,.15); color: var(--orange); }
-  .b-r { background: rgba(253,121,121,.15); color: var(--red); }
-
-  .pg { display: grid; grid-template-columns: auto 1fr; gap: 1px 8px; font-size: .85em; }
-  .pk { color: var(--dim); white-space: nowrap; }
-  .pv { font-weight: 500; white-space: nowrap; }
-
-  .bar-w { display: flex; align-items: center; gap: 8px; min-width: 120px; }
-  .bar {
-    height: 7px; border-radius: 4px;
-    background: linear-gradient(90deg, var(--accent), var(--green));
-    min-width: 4px;
-  }
-  .bar-l { font-weight: 600; font-size: .92em; white-space: nowrap; }
-
-  .nt { font-size: .8em; color: var(--dim); max-width: 200px; line-height: 1.5; }
-
-  /* Category borders */
-  tr[data-cat="net"] td:first-child { border-left: 3px solid var(--accent); }
-  tr[data-cat="hw"] td:first-child { border-left: 3px solid var(--green); }
-  tr[data-cat="ec"] td:first-child { border-left: 3px solid var(--orange); }
-  tr[data-cat="tr"] td:first-child { border-left: 3px solid var(--blue); }
-  tr[data-cat="fo"] td:first-child { border-left: 3px solid var(--pink); }
-
-  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 16px; }
-  .lg-i { display: flex; align-items: center; gap: 5px; font-size: .83em; color: var(--dim); }
-  .lg-d { width: 10px; height: 10px; border-radius: 3px; }
-
-  /* Trends */
-  .trends { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 32px; }
-  .tc {
-    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-    padding: 20px;
-  }
-  .tc h3 { font-size: .95em; margin-bottom: 6px; }
-  .tc p { color: var(--dim); font-size: .88em; }
-
-  .footer {
-    text-align: center; padding: 36px 20px; color: var(--dim);
-    font-size: .83em; border-top: 1px solid var(--border); margin-top: 36px;
-  }
-  .footer a { color: var(--accent-l); text-decoration: none; }
-  .footer a:hover { text-decoration: underline; }
-
-  @media (max-width: 768px) {
-    .hero h1 { font-size: 1.5em; }
-    .controls { flex-direction: column; align-items: stretch; }
-    .sbox { margin-left: 0; width: 100%; }
-    .stats { grid-template-columns: repeat(2, 1fr); }
-  }
+  body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #fff; color: #222; padding: 32px; }
+  h1 { font-size: 1.5em; margin-bottom: 6px; }
+  .sub { color: #666; font-size: .9em; margin-bottom: 20px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { border: 1px solid #d0d0d0; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #f5f5f5; font-weight: 600; white-space: nowrap; position: sticky; top: 0; z-index: 1; }
+  tr:hover td { background: #fafafa; }
+  .red { color: #c0392b; }
+  .note { font-size: 12px; color: #666; margin-top: 16px; line-height: 1.8; }
+  .note a { color: #2563eb; }
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <h1>互联网大厂薪资 & 年终奖绩效对照表</h1>
-  <p>覆盖 18 家主流科技公司 | 基本薪资月数 + 绩效体系 + 年终奖对应月数 | 多源交叉验证</p>
-  <span class="tag">数据截至 2025.12 | 经多渠道验证修正</span>
-</header>
+<h1>互联网大厂薪资与年终奖绩效对照表</h1>
+<p class="sub">数据截至 2025.12 | 经多渠道交叉验证 | 实际薪酬因部门、职级、城市等因素存在差异</p>
 
-<main class="container">
+<table>
+  <thead>
+    <tr>
+      <th>公司</th>
+      <th>Base月数</th>
+      <th>标准总包(薪)</th>
+      <th>绩效体系</th>
+      <th>绩效等级</th>
+      <th>对应年终奖(月数)</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
 
-  <section class="stats" aria-label="概览数据">
-    <div class="s-card"><div class="n">18</div><div class="l">覆盖公司数</div></div>
-    <div class="s-card"><div class="n">25薪</div><div class="l">最高总包（京东采销）</div></div>
-    <div class="s-card"><div class="n">48个月</div><div class="l">最高年终奖（腾讯游戏）</div></div>
-    <div class="s-card"><div class="n">70%</div><div class="l">京东年终奖投入同比涨幅</div></div>
-  </section>
+    <tr>
+      <td rowspan="4">字节跳动<br>ByteDance</td>
+      <td rowspan="4">12个月</td>
+      <td rowspan="4">15薪</td>
+      <td rowspan="4">M- / M / M+ / E</td>
+      <td>M-</td><td>1 - 2 个月</td>
+      <td rowspan="4">2025年奖金池+35%；现金封顶3个月，超出部分25%现金+75%期权/RSU；调薪投入+1.5倍</td>
+    </tr>
+    <tr><td>M</td><td>3 - 4.5 个月</td></tr>
+    <tr><td>M+</td><td>5.5 - 7 个月</td></tr>
+    <tr><td>E</td><td>10.5 - 12 个月</td></tr>
 
-  <!-- Corrections log -->
-  <details class="corrections">
-    <summary>数据验证 & 修正记录（点击展开）</summary>
-    <ul class="cl">
-      <li><strong>字节跳动</strong>：2025年绩效奖金池提升35%，<span class="old">M+: 4-4.5个月, E: 7-9个月</span> <span class="fix">→ M+: 5.5-7个月, E: 10.5-12个月</span>；超3个月部分25%现金+75%期权</li>
-      <li><strong>腾讯</strong>：服务奖(13薪)已并入月薪，实际base按月发放含此部分；<span class="old">Underperform: 1.5-3个月</span> <span class="fix">→ 1-2个月</span>；<span class="old">Outstanding: 8-10个月</span> <span class="fix">→ 5+个月(标准部门)</span></li>
-      <li><strong>阿里巴巴</strong>：<span class="old">3.75: 6-9个月</span> <span class="fix">→ 5.5-6.5个月</span>（据淘天等BU实际数据）；3.75+另有25-50万长期激励</li>
-      <li><strong>京东</strong>：2025年拆为19薪/20薪两档部门，<span class="old">A+: 8个月(20薪)</span> <span class="fix">→ 19薪部门A+: 10个月(22薪), 20薪部门A+: 12个月(24薪)</span>；采销平均25薪</li>
-      <li><strong>快手</strong>：绩效体系<span class="old">A/B+/B/B-四档</span> <span class="fix">→ S/A/B/C/D五档</span>；S档额外+3个月(7月发放)</li>
-      <li><strong>小红书</strong>：base确认为<span class="fix">16薪</span>(非15.5)；高绩效 <span class="fix">3.75可达8个月，4分可达20+个月</span></li>
-      <li><strong>蚂蚁集团</strong>：2025年1月起≤17级13薪并入月薪，≥18级13薪并入年度奖金；绩效股改为季度归属</li>
-      <li><strong>拼多多</strong>：年终奖合计<span class="old">~6个月</span> <span class="fix">→ 3-4个月</span>（年前2+年后1-2）</li>
-      <li><strong>大疆</strong>：新增公司，15薪base + 3-6个月季度绩效奖</li>
-    </ul>
-  </details>
+    <tr>
+      <td rowspan="4">腾讯<br>Tencent</td>
+      <td rowspan="4">12个月</td>
+      <td rowspan="4">16-18薪</td>
+      <td rowspan="4">突出 / 良好 / 欠佳</td>
+      <td>欠佳</td><td>1 - 2 个月</td>
+      <td rowspan="4">服务奖(13薪)已并入月薪；90%员工16-18薪；游戏/WXG部门可达24-48个月；含房补4k/月</td>
+    </tr>
+    <tr><td>良好</td><td>3 - 4 个月</td></tr>
+    <tr><td>突出</td><td>5+ 个月</td></tr>
+    <tr><td>游戏/WXG</td><td>6 - 48 个月</td></tr>
 
-  <!-- Controls -->
-  <nav class="controls" aria-label="筛选与搜索">
-    <label>分类：</label>
-    <button class="fbtn on" onclick="filt('all',this)">全部</button>
-    <button class="fbtn" onclick="filt('net',this)">综合互联网</button>
-    <button class="fbtn" onclick="filt('ec',this)">电商</button>
-    <button class="fbtn" onclick="filt('hw',this)">硬件/通信</button>
-    <button class="fbtn" onclick="filt('tr',this)">出行/旅游</button>
-    <button class="fbtn" onclick="filt('fo',this)">跨境</button>
-    <input type="text" class="sbox" placeholder="搜索公司名..." oninput="search(this.value)" aria-label="搜索公司">
-  </nav>
+    <tr>
+      <td rowspan="4">阿里巴巴<br>Alibaba</td>
+      <td rowspan="4">13个月</td>
+      <td rowspan="4">16薪</td>
+      <td rowspan="4">3.25 / 3.5 / 3.75 / 4</td>
+      <td>3.25 (10%)</td><td class="red">0 个月</td>
+      <td rowspan="4">3.75+另有长期激励25-50万；60%拿3.5，30%拿3.75</td>
+    </tr>
+    <tr><td>3.5 (60%)</td><td>3 - 4 个月</td></tr>
+    <tr><td>3.75 (30%)</td><td>5.5 - 6.5 个月</td></tr>
+    <tr><td>4 (极少)</td><td>8 - 10+ 个月</td></tr>
 
-  <div class="legend">
-    <div class="lg-i"><div class="lg-d" style="background:var(--accent)"></div>综合互联网</div>
-    <div class="lg-i"><div class="lg-d" style="background:var(--orange)"></div>电商</div>
-    <div class="lg-i"><div class="lg-d" style="background:var(--green)"></div>硬件/通信</div>
-    <div class="lg-i"><div class="lg-d" style="background:var(--blue)"></div>出行/旅游</div>
-    <div class="lg-i"><div class="lg-d" style="background:var(--pink)"></div>跨境</div>
-  </div>
+    <tr>
+      <td rowspan="3">蚂蚁集团<br>Ant Group</td>
+      <td rowspan="3">12个月</td>
+      <td rowspan="3">15薪</td>
+      <td rowspan="3">3.5 / 3.5+ / 3.75</td>
+      <td>3.5</td><td>2.5 - 3.5 个月</td>
+      <td rowspan="3">2025年起≤17级13薪并入月薪，≥18级并入年度奖金；绩效股改季度归属；年终奖提前至2月底；3.75另有~4000股期权</td>
+    </tr>
+    <tr><td>3.5+</td><td>3.5 - 5.5 个月</td></tr>
+    <tr><td>3.75</td><td>4.5 - 6 个月</td></tr>
 
-  <!-- ==================== MAIN TABLE ==================== -->
-  <div class="tw">
-    <table id="T" aria-label="互联网大厂薪资年终奖绩效对照表">
-      <thead>
-        <tr>
-          <th data-c="0" onclick="srt(0)">公司 <span class="si">&#9650;&#9660;</span></th>
-          <th data-c="1" onclick="srt(1)">Base月数 <span class="si">&#9650;&#9660;</span></th>
-          <th data-c="2" onclick="srt(2)">标准总包(薪) <span class="si">&#9650;&#9660;</span></th>
-          <th>绩效体系</th>
-          <th>各档年终奖(月数)</th>
-          <th data-c="5" onclick="srt(5)">最高年终奖(月) <span class="si">&#9650;&#9660;</span></th>
-          <th>备注</th>
-        </tr>
-      </thead>
-      <tbody id="TB">
+    <tr>
+      <td rowspan="6">京东<br>JD.com</td>
+      <td rowspan="6">12个月</td>
+      <td rowspan="6">19-20薪</td>
+      <td rowspan="6">A+ / A / B+</td>
+      <td colspan="2" style="font-weight:600;background:#f9f9f9">【19薪部门】</td>
+      <td rowspan="6">2025年年终奖总投入+70%；采销平均25薪上不封顶；92%员工拿满或超额；O序列年前发放</td>
+    </tr>
+    <tr><td>B+</td><td>7 个月 → 全年19薪</td></tr>
+    <tr><td>A</td><td>9 个月 → 全年21薪</td></tr>
+    <tr><td>A+</td><td>10 个月 → 全年22薪</td></tr>
+    <tr><td colspan="2" style="font-weight:600;background:#f9f9f9">【20薪部门】B+ = 8个月(20薪)，A+ = 12个月(24薪)</td></tr>
+    <tr><td colspan="2" style="font-weight:600;background:#f9f9f9">【采销】平均25薪，上不封顶</td></tr>
 
-        <!-- 1. 字节跳动 ByteDance -->
-        <tr data-cat="net" data-co="字节跳动 ByteDance" data-base="12" data-total="15" data-mx="12">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#3b82f6,#06b6d4)">字节</div><div><div class="cn">字节跳动</div><div class="ce">ByteDance</div></div></div></td>
-          <td><span class="b b-b">12个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:75%"></div><span class="bar-l">15薪</span></div></td>
-          <td><span class="b b-p">M- / M / M+ / E</span></td>
-          <td><div class="pg">
-            <span class="pk">M-</span><span class="pv">1 - 2 个月</span>
-            <span class="pk">M</span><span class="pv">3 - 4.5 个月</span>
-            <span class="pk">M+</span><span class="pv">5.5 - 7 个月</span>
-            <span class="pk">E</span><span class="pv">10.5 - 12 个月</span>
-          </div></td>
-          <td><span class="b b-g">12</span></td>
-          <td class="nt">2025年奖金池+35%；现金封顶3个月，超出部分25%现金+75%期权/RSU；调薪投入+1.5倍</td>
-        </tr>
+    <tr>
+      <td rowspan="3">美团<br>Meituan</td>
+      <td rowspan="3">12个月</td>
+      <td rowspan="3">15.5薪</td>
+      <td rowspan="3">超出 / 符合 / 不及预期</td>
+      <td>不及预期</td><td>1.4 - 2.1 个月</td>
+      <td rowspan="3">结构=12+0.5(半年绩效)×2+2.5(年终)；年终基数3.5个月×绩效系数(0.4~2.0)；3月发放</td>
+    </tr>
+    <tr><td>符合预期</td><td>2.8 - 3.5 个月</td></tr>
+    <tr><td>超出预期</td><td>3.9 - 7 个月</td></tr>
 
-        <!-- 2. 腾讯 Tencent -->
-        <tr data-cat="net" data-co="腾讯 Tencent" data-base="12" data-total="16" data-mx="48">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#22c55e,#16a34a)">腾讯</div><div><div class="cn">腾讯</div><div class="ce">Tencent</div></div></div></td>
-          <td><span class="b b-b">12个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:80%"></div><span class="bar-l">16-18薪</span></div></td>
-          <td><span class="b b-p">突出 / 良好 / 欠佳</span></td>
-          <td><div class="pg">
-            <span class="pk">欠佳</span><span class="pv">1 - 2 个月</span>
-            <span class="pk">良好</span><span class="pv">3 - 4 个月</span>
-            <span class="pk">突出</span><span class="pv">5+ 个月</span>
-            <span class="pk">游戏/WXG</span><span class="pv">6 - 48 个月</span>
-          </div></td>
-          <td><span class="b b-g">48</span></td>
-          <td class="nt">服务奖(13薪)已并入月薪；90%员工16-18薪；含房补4k/月；游戏部门极高</td>
-        </tr>
+    <tr>
+      <td rowspan="5">百度<br>Baidu</td>
+      <td rowspan="5">12个月</td>
+      <td rowspan="5">16薪</td>
+      <td rowspan="5">E / M+ / M / M- / I</td>
+      <td>I</td><td class="red">0 个月 (×0)</td>
+      <td rowspan="5">年终基数=4个月×绩效系数；T5起有股权激励</td>
+    </tr>
+    <tr><td>M-</td><td>1.6 个月 (×0.4)</td></tr>
+    <tr><td>M</td><td>3.2 - 4 个月 (×0.8-1.0)</td></tr>
+    <tr><td>M+</td><td>4.8 - 5.6 个月 (×1.2-1.4)</td></tr>
+    <tr><td>E</td><td>5.6 - 6.4 个月 (×1.4-1.6)</td></tr>
 
-        <!-- 3. 阿里巴巴 Alibaba -->
-        <tr data-cat="ec" data-co="阿里巴巴 Alibaba" data-base="13" data-total="16" data-mx="10">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#f97316,#ea580c)">阿里</div><div><div class="cn">阿里巴巴</div><div class="ce">Alibaba</div></div></div></td>
-          <td><span class="b b-b">13个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:80%"></div><span class="bar-l">16薪</span></div></td>
-          <td><span class="b b-p">3.25 / 3.5 / 3.75 / 4</span></td>
-          <td><div class="pg">
-            <span class="pk">3.25 (10%)</span><span class="pv" style="color:var(--red)">0 个月</span>
-            <span class="pk">3.5 (60%)</span><span class="pv">3 - 4 个月</span>
-            <span class="pk">3.75 (30%)</span><span class="pv">5.5 - 6.5 个月</span>
-            <span class="pk">4 (极少)</span><span class="pv">8 - 10+ 个月</span>
-          </div></td>
-          <td><span class="b b-g">10+</span></td>
-          <td class="nt">3.75+另有长期激励25-50万；股票激励视职级而定</td>
-        </tr>
+    <tr>
+      <td rowspan="5">快手<br>Kuaishou</td>
+      <td rowspan="5">12个月</td>
+      <td rowspan="5">16薪</td>
+      <td rowspan="5">S / A / B / C / D</td>
+      <td>B</td><td>2 - 5 个月</td>
+      <td rowspan="5">S额外+3个月、A额外+1个月（次年7月发放）；1月底发放基础年终奖</td>
+    </tr>
+    <tr><td>A</td><td>5 - 8 个月</td></tr>
+    <tr><td>S</td><td>8 - 12 个月</td></tr>
+    <tr><td>S 额外(7月发)</td><td>+3 个月</td></tr>
+    <tr><td>A 额外(7月发)</td><td>+1 个月</td></tr>
 
-        <!-- 4. 蚂蚁集团 Ant Group -->
-        <tr data-cat="net" data-co="蚂蚁集团 Ant Group" data-base="12" data-total="15" data-mx="6">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8)">蚂蚁</div><div><div class="cn">蚂蚁集团</div><div class="ce">Ant Group</div></div></div></td>
-          <td><span class="b b-b">12个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:75%"></div><span class="bar-l">15薪</span></div></td>
-          <td><span class="b b-p">3.5 / 3.5+ / 3.75</span></td>
-          <td><div class="pg">
-            <span class="pk">3.5</span><span class="pv">2.5 - 3.5 个月</span>
-            <span class="pk">3.5+</span><span class="pv">3.5 - 5.5 个月</span>
-            <span class="pk">3.75</span><span class="pv">4.5 - 6 个月</span>
-          </div></td>
-          <td><span class="b b-g">6</span></td>
-          <td class="nt">2025年起≤17级13薪并入月薪，≥18级并入年度奖金；绩效股改季度归属；年终奖提前至2月底；3.75另有~4000股期权</td>
-        </tr>
+    <tr>
+      <td rowspan="2">拼多多<br>Pinduoduo</td>
+      <td rowspan="2">12个月</td>
+      <td rowspan="2">18薪</td>
+      <td rowspan="2">未公开分档</td>
+      <td>年前固定</td><td>2 个月</td>
+      <td rowspan="2">以高底薪著称；校招25k-40k×18薪；应届年薪50-70万+；工作强度大(均62.4h/周)</td>
+    </tr>
+    <tr><td>年后绩效</td><td>1 - 2 个月</td></tr>
 
-        <!-- 5. 京东 JD.com -->
-        <tr data-cat="ec" data-co="京东 JD.com" data-base="12" data-total="20" data-mx="12">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#ef4444,#dc2626)">京东</div><div><div class="cn">京东</div><div class="ce">JD.com</div></div></div></td>
-          <td><span class="b b-b">12个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:100%"></div><span class="bar-l">19-20薪</span></div></td>
-          <td><span class="b b-p">A+ / A / B+</span></td>
-          <td><div class="pg">
-            <span class="pk" style="font-weight:600;color:var(--orange)">【19薪部门】</span><span class="pv"></span>
-            <span class="pk">B+</span><span class="pv">7 个月 (19薪)</span>
-            <span class="pk">A</span><span class="pv">9 个月 (21薪)</span>
-            <span class="pk">A+</span><span class="pv">10 个月 (22薪)</span>
-            <span class="pk" style="font-weight:600;color:var(--orange)">【20薪部门】</span><span class="pv"></span>
-            <span class="pk">B+</span><span class="pv">8 个月 (20薪)</span>
-            <span class="pk">A+</span><span class="pv">12 个月 (24薪)</span>
-          </div></td>
-          <td><span class="b b-g">12</span></td>
-          <td class="nt">2025年年终奖总投入+70%；采销平均25薪上不封顶；92%员工拿满或超额；O序列年前发放</td>
-        </tr>
+    <tr>
+      <td rowspan="5">小红书<br>Xiaohongshu</td>
+      <td rowspan="5">12个月</td>
+      <td rowspan="5">16薪</td>
+      <td rowspan="5">3.25 / 3.5 / 3.75 / 4 / 5</td>
+      <td>&lt; 3.5</td><td class="red">仅13薪 (1个月)</td>
+      <td rowspan="5">16薪=12+1(双薪)+3(奖金目标)；房补1k/月；高绩效回报极高但名额极少</td>
+    </tr>
+    <tr><td>3.5</td><td>3 - 5 个月</td></tr>
+    <tr><td>3.75</td><td>~8 个月</td></tr>
+    <tr><td>4</td><td>20+ 个月</td></tr>
+    <tr><td>5 (极少)</td><td>20个月 + 30个月期权</td></tr>
 
-        <!-- 6. 美团 Meituan -->
-        <tr data-cat="net" data-co="美团 Meituan" data-base="12" data-total="15.5" data-mx="7">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)">美团</div><div><div class="cn">美团</div><div class="ce">Meituan</div></div></div></td>
-          <td><span class="b b-b">12个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:77%"></div><span class="bar-l">15.5薪</span></div></td>
-          <td><span class="b b-p">超出 / 符合 / 不及预期</span></td>
-          <td><div class="pg">
-            <span class="pk">不及预期</span><span class="pv">1.4 - 2.1 个月</span>
-            <span class="pk">符合预期</span><span class="pv">2.8 - 3.5 个月</span>
-            <span class="pk">超出预期</span><span class="pv">3.9 - 7 个月</span>
-          </div></td>
-          <td><span class="b b-g">7</span></td>
-          <td class="nt">结构=12+0.5(半年绩效)×2+2.5(年终)；年终基数3.5个月×绩效系数(0.4~2.0)；3月发放</td>
-        </tr>
+    <tr>
+      <td rowspan="5">华为<br>Huawei</td>
+      <td rowspan="5">12个月</td>
+      <td rowspan="5">14-16薪</td>
+      <td rowspan="5">A / B+ / B / C<br>(361体系)</td>
+      <td>C (10%)</td><td>2 - 2.5 个月</td>
+      <td rowspan="5">另有分红/TUP/虚拟股(ESOP)；5月发放；15级+奖金取决于部门奖金包；海外有额外补助</td>
+    </tr>
+    <tr><td>B (60%)</td><td>2 - 3 个月</td></tr>
+    <tr><td>B+ (30%)</td><td>3 个月</td></tr>
+    <tr><td>A</td><td>4 - 6 个月</td></tr>
+    <tr><td>15级+</td><td>5 - 12 个月</td></tr>
 
-        <!-- 7. 百度 Baidu -->
-        <tr data-cat="net" data-co="百度 Baidu" data-base="12" data-total="16" data-mx="6.4">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#3b82f6,#2563eb)">百度</div><div><div class="cn">百度</div><div class="ce">Baidu</div></div></div></td>
-          <td><span class="b b-b">12个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:80%"></div><span class="bar-l">16薪</span></div></td>
-          <td><span class="b b-p">E / M+ / M / M- / I</span></td>
-          <td><div class="pg">
-            <span class="pk">I</span><span class="pv" style="color:var(--red)">0 个月 (×0)</span>
-            <span class="pk">M-</span><span class="pv">1.6 个月 (×0.4)</span>
-            <span class="pk">M</span><span class="pv">3.2 - 4 个月 (×0.8-1.0)</span>
-            <span class="pk">M+</span><span class="pv">4.8 - 5.6 个月 (×1.2-1.4)</span>
-            <span class="pk">E</span><span class="pv">5.6 - 6.4 个月 (×1.4-1.6)</span>
-          </div></td>
-          <td><span class="b b-g">6.4</span></td>
-          <td class="nt">年终基数=4个月×绩效系数；T5起有股权激励；I档无年终奖</td>
-        </tr>
+    <tr>
+      <td rowspan="2">网易<br>NetEase</td>
+      <td rowspan="2">12个月</td>
+      <td rowspan="2">16薪</td>
+      <td rowspan="2">按部门绩效分配</td>
+      <td>多数员工</td><td>2 - 3 个月</td>
+      <td rowspan="2">部门差异极大；游戏部门远高于平均；含三餐/健身等福利</td>
+    </tr>
+    <tr><td>游戏高绩效</td><td>可达 18 个月</td></tr>
 
-        <!-- 8. 快手 Kuaishou -->
-        <tr data-cat="net" data-co="快手 Kuaishou" data-base="12" data-total="16" data-mx="15">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#f97316,#fb923c)">快手</div><div><div class="cn">快手</div><div class="ce">Kuaishou</div></div></div></td>
-          <td><span class="b b-b">12个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:80%"></div><span class="bar-l">16薪</span></div></td>
-          <td><span class="b b-p">S / A / B / C / D</span></td>
-          <td><div class="pg">
-            <span class="pk">B</span><span class="pv">2 - 5 个月</span>
-            <span class="pk">A</span><span class="pv">5 - 8 个月</span>
-            <span class="pk">S</span><span class="pv">8 - 12 个月</span>
-            <span class="pk">S额外</span><span class="pv">+3 个月 (7月发)</span>
-            <span class="pk">A额外</span><span class="pv">+1 个月 (7月发)</span>
-          </div></td>
-          <td><span class="b b-g">15</span></td>
-          <td class="nt">已改为S/A/B/C/D五档；1月底发放基础年终奖；S/A额外奖金次年7月发放</td>
-        </tr>
+    <tr>
+      <td rowspan="5">滴滴<br>DiDi</td>
+      <td rowspan="5">12个月</td>
+      <td rowspan="5">15薪</td>
+      <td rowspan="5">S / A / B / C / D</td>
+      <td>D</td><td>1 个月</td>
+      <td rowspan="5">大部分人集中在B和C档；一般年奖约3个月</td>
+    </tr>
+    <tr><td>C</td><td>2 个月</td></tr>
+    <tr><td>B</td><td>4 个月</td></tr>
+    <tr><td>A</td><td>6 个月</td></tr>
+    <tr><td>S</td><td>10 个月</td></tr>
 
-        <!-- 9. 拼多多 Pinduoduo -->
-        <tr data-cat="ec" data-co="拼多多 Pinduoduo PDD" data-base="12" data-total="18" data-mx="4">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#ef4444,#f97316)">拼多多</div><div><div class="cn">拼多多</div><div class="ce">Pinduoduo</div></div></div></td>
-          <td><span class="b b-b">12个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:90%"></div><span class="bar-l">18薪</span></div></td>
-          <td><span class="b b-p">未公开分档</span></td>
-          <td><div class="pg">
-            <span class="pk">年前固定</span><span class="pv">2 个月</span>
-            <span class="pk">年后绩效</span><span class="pv">1 - 2 个月</span>
-          </div></td>
-          <td><span class="b b-g">4</span></td>
-          <td class="nt">以高底薪著称；校招25k-40k×18；应届年薪50-70万+；工作强度大(62.4h/周)</td>
-        </tr>
+    <tr>
+      <td rowspan="2">小米<br>Xiaomi</td>
+      <td rowspan="2">12个月</td>
+      <td rowspan="2">14薪</td>
+      <td rowspan="2">未公开详细分档</td>
+      <td>多数员工</td><td>1 - 3 个月</td>
+      <td rowspan="2">16级起有股权激励</td>
+    </tr>
+    <tr><td>核心部门</td><td>4 - 6 个月</td></tr>
 
-        <!-- 10. 小红书 Xiaohongshu -->
-        <tr data-cat="net" data-co="小红书 Xiaohongshu REDnote" data-base="12" data-total="16" data-mx="20">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#ef4444,#ec4899)">小红书</div><div><div class="cn">小红书</div><div class="ce">Xiaohongshu</div></div></div></td>
-          <td><span class="b b-b">12个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:80%"></div><span class="bar-l">16薪</span></div></td>
-          <td><span class="b b-p">3.25 / 3.5 / 3.75 / 4 / 5</span></td>
-          <td><div class="pg">
-            <span class="pk">&lt; 3.5</span><span class="pv" style="color:var(--red)">仅13薪 (1个月)</span>
-            <span class="pk">3.5</span><span class="pv">3 - 5 个月</span>
-            <span class="pk">3.75</span><span class="pv">~8 个月</span>
-            <span class="pk">4</span><span class="pv">20+ 个月</span>
-            <span class="pk">5 (极少)</span><span class="pv">20个月+30个月期权</span>
-          </div></td>
-          <td><span class="b b-g">20+</span></td>
-          <td class="nt">16薪(12+1双薪+3奖金目标)；房补1k/月；高绩效回报极高但名额极少</td>
-        </tr>
+    <tr>
+      <td rowspan="2">B站<br>Bilibili</td>
+      <td rowspan="2">12个月</td>
+      <td rowspan="2">15薪</td>
+      <td rowspan="2">—</td>
+      <td>范围</td><td>0 - 6 个月</td>
+      <td rowspan="2">2024Q3首次单季盈利；年终奖波动较大</td>
+    </tr>
+    <tr><td>平均</td><td>~3 个月</td></tr>
 
-        <!-- 11. 华为 Huawei -->
-        <tr data-cat="hw" data-co="华为 Huawei" data-base="12" data-total="15" data-mx="12">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#ef4444,#991b1b)">华为</div><div><div class="cn">华为</div><div class="ce">Huawei</div></div></div></td>
-          <td><span class="b b-b">12个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:75%"></div><span class="bar-l">14-16薪</span></div></td>
-          <td><span class="b b-p">A / B+ / B / C (361体系)</span></td>
-          <td><div class="pg">
-            <span class="pk">C (10%)</span><span class="pv">2 - 2.5 个月</span>
-            <span class="pk">B (60%)</span><span class="pv">2 - 3 个月</span>
-            <span class="pk">B+ (30%)</span><span class="pv">3 个月</span>
-            <span class="pk">A</span><span class="pv">4 - 6 个月</span>
-            <span class="pk">15级+</span><span class="pv">5 - 12 个月</span>
-          </div></td>
-          <td><span class="b b-g">12</span></td>
-          <td class="nt">另有分红/TUP/虚拟股(ESOP)；5月发放；高级别奖金取决于部门奖金包；海外有额外补助</td>
-        </tr>
+    <tr>
+      <td rowspan="4">携程<br>Trip.com</td>
+      <td rowspan="4">12个月</td>
+      <td rowspan="4">14-15薪</td>
+      <td rowspan="4">A(5%) / B(60%)<br>C(30%) / D(5%)</td>
+      <td>D (5%)</td><td class="red">0 个月</td>
+      <td rowspan="4">年中+年末各发一次(每次约半数)；5分制考核</td>
+    </tr>
+    <tr><td>C (30%)</td><td>1 个月</td></tr>
+    <tr><td>B (60%)</td><td>1.5 个月</td></tr>
+    <tr><td>A (5%)</td><td>2 个月</td></tr>
 
-        <!-- 12. 网易 NetEase -->
-        <tr data-cat="net" data-co="网易 NetEase" data-base="12" data-total="16" data-mx="18">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#dc2626,#b91c1c)">网易</div><div><div class="cn">网易</div><div class="ce">NetEase</div></div></div></td>
-          <td><span class="b b-b">12个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:80%"></div><span class="bar-l">16薪</span></div></td>
-          <td><span class="b b-p">按部门绩效分配</span></td>
-          <td><div class="pg">
-            <span class="pk">多数员工</span><span class="pv">2 - 3 个月</span>
-            <span class="pk">游戏高绩效</span><span class="pv">可达 18 个月</span>
-          </div></td>
-          <td><span class="b b-g">18</span></td>
-          <td class="nt">部门差异极大；游戏部门远高于平均；含三餐/健身等福利</td>
-        </tr>
+    <tr>
+      <td rowspan="3">大疆<br>DJI</td>
+      <td rowspan="3">15个月</td>
+      <td rowspan="3">18-21薪</td>
+      <td rowspan="3">按季度绩效</td>
+      <td>T1-T2</td><td>3 - 6 个月</td>
+      <td rowspan="3">基础年薪按15薪计算；T5+有股票激励；按季度绩效发放奖金；高级别总包可达100-250万</td>
+    </tr>
+    <tr><td>T3</td><td>~6 个月</td></tr>
+    <tr><td>T4-T6</td><td>4 - 10+ 个月</td></tr>
 
-        <!-- 13. 滴滴 DiDi -->
-        <tr data-cat="tr" data-co="滴滴 DiDi" data-base="12" data-total="15" data-mx="10">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#f97316,#ea580c)">滴滴</div><div><div class="cn">滴滴</div><div class="ce">DiDi</div></div></div></td>
-          <td><span class="b b-b">12个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:75%"></div><span class="bar-l">15薪</span></div></td>
-          <td><span class="b b-p">S / A / B / C / D</span></td>
-          <td><div class="pg">
-            <span class="pk">D</span><span class="pv">1 个月</span>
-            <span class="pk">C</span><span class="pv">2 个月</span>
-            <span class="pk">B</span><span class="pv">4 个月</span>
-            <span class="pk">A</span><span class="pv">6 个月</span>
-            <span class="pk">S</span><span class="pv">10 个月</span>
-          </div></td>
-          <td><span class="b b-g">10</span></td>
-          <td class="nt">大部分人集中在B和C档；一般年奖约3个月</td>
-        </tr>
+    <tr>
+      <td>Shopee<br>虾皮</td>
+      <td>12个月</td>
+      <td>16.5薪</td>
+      <td>正常绩效</td>
+      <td>正常绩效(满3年)</td>
+      <td>4.5 个月</td>
+      <td>2025年无薪资普调</td>
+    </tr>
 
-        <!-- 14. 小米 Xiaomi -->
-        <tr data-cat="hw" data-co="小米 Xiaomi" data-base="12" data-total="14" data-mx="6">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#f97316,#fbbf24)">小米</div><div><div class="cn">小米</div><div class="ce">Xiaomi</div></div></div></td>
-          <td><span class="b b-b">12个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:70%"></div><span class="bar-l">14薪</span></div></td>
-          <td><span class="b b-p">未公开详细分档</span></td>
-          <td><div class="pg">
-            <span class="pk">多数员工</span><span class="pv">1 - 3 个月</span>
-            <span class="pk">核心部门</span><span class="pv">4 - 6 个月</span>
-          </div></td>
-          <td><span class="b b-g">6</span></td>
-          <td class="nt">16级起有股权激励</td>
-        </tr>
+  </tbody>
+</table>
 
-        <!-- 15. B站 Bilibili -->
-        <tr data-cat="net" data-co="B站 Bilibili 哔哩哔哩" data-base="12" data-total="15" data-mx="6">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#ec4899,#f472b6)">B站</div><div><div class="cn">B站</div><div class="ce">Bilibili</div></div></div></td>
-          <td><span class="b b-b">12个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:75%"></div><span class="bar-l">15薪</span></div></td>
-          <td><span class="b b-p">—</span></td>
-          <td><div class="pg">
-            <span class="pk">范围</span><span class="pv">0 - 6 个月</span>
-            <span class="pk">平均</span><span class="pv">~3 个月</span>
-          </div></td>
-          <td><span class="b b-g">6</span></td>
-          <td class="nt">2024Q3首次单季盈利；年终奖波动较大</td>
-        </tr>
-
-        <!-- 16. 携程 Trip.com -->
-        <tr data-cat="tr" data-co="携程 Trip.com Ctrip" data-base="12" data-total="15" data-mx="2">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#3b82f6,#6366f1)">携程</div><div><div class="cn">携程</div><div class="ce">Trip.com</div></div></div></td>
-          <td><span class="b b-b">12个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:75%"></div><span class="bar-l">14-15薪</span></div></td>
-          <td><span class="b b-p">A(5%) / B(60%) / C(30%) / D(5%)</span></td>
-          <td><div class="pg">
-            <span class="pk">D (5%)</span><span class="pv" style="color:var(--red)">0 个月</span>
-            <span class="pk">C (30%)</span><span class="pv">1 个月</span>
-            <span class="pk">B (60%)</span><span class="pv">1.5 个月</span>
-            <span class="pk">A (5%)</span><span class="pv">2 个月</span>
-          </div></td>
-          <td><span class="b b-g">2</span></td>
-          <td class="nt">年中+年末各发一次(每次约半数)；5分制考核</td>
-        </tr>
-
-        <!-- 17. 大疆 DJI -->
-        <tr data-cat="hw" data-co="大疆 DJI" data-base="12" data-total="18" data-mx="6">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#1e293b,#475569)">大疆</div><div><div class="cn">大疆</div><div class="ce">DJI</div></div></div></td>
-          <td><span class="b b-b">15个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:90%"></div><span class="bar-l">18-21薪</span></div></td>
-          <td><span class="b b-p">按季度绩效</span></td>
-          <td><div class="pg">
-            <span class="pk">T1-T2</span><span class="pv">3 - 6 个月</span>
-            <span class="pk">T3</span><span class="pv">~6 个月</span>
-            <span class="pk">T4-T6</span><span class="pv">4 - 10+ 个月</span>
-          </div></td>
-          <td><span class="b b-g">10+</span></td>
-          <td class="nt">基础年薪按15薪计算；T5+有股票激励；季度绩效奖金；高级别总包可达100-250万</td>
-        </tr>
-
-        <!-- 18. Shopee -->
-        <tr data-cat="fo" data-co="Shopee 虾皮" data-base="12" data-total="16.5" data-mx="4.5">
-          <td><div class="co"><div class="logo" style="background:linear-gradient(135deg,#f97316,#ef4444)">虾皮</div><div><div class="cn">Shopee</div><div class="ce">虾皮</div></div></div></td>
-          <td><span class="b b-b">12个月</span></td>
-          <td><div class="bar-w"><div class="bar" style="width:82%"></div><span class="bar-l">16.5薪</span></div></td>
-          <td><span class="b b-p">正常绩效</span></td>
-          <td><div class="pg">
-            <span class="pk">正常绩效(满3年)</span><span class="pv">4.5 个月</span>
-          </div></td>
-          <td><span class="b b-g">4.5</span></td>
-          <td class="nt">2025年无薪资普调</td>
-        </tr>
-
-      </tbody>
-    </table>
-  </div>
-
-  <!-- ==================== JSON for AI ==================== -->
-  <script id="structured-data" type="application/json">
-[
-  {"company":"字节跳动","company_en":"ByteDance","category":"综合互联网","base_months":12,"total_pkg":"15薪","perf_system":"M- / M / M+ / E","bonus_by_grade":{"M-":"1-2个月","M":"3-4.5个月","M+":"5.5-7个月","E":"10.5-12个月"},"max_bonus_months":12,"notes":"2025年奖金池+35%；现金封顶3个月，超出25%现金+75%期权/RSU"},
-  {"company":"腾讯","company_en":"Tencent","category":"综合互联网","base_months":12,"total_pkg":"16-18薪","perf_system":"突出 / 良好 / 欠佳","bonus_by_grade":{"欠佳":"1-2个月","良好":"3-4个月","突出":"5+个月","游戏/WXG":"6-48个月"},"max_bonus_months":48,"notes":"服务奖(13薪)已并入月薪；游戏部门极高"},
-  {"company":"阿里巴巴","company_en":"Alibaba","category":"电商","base_months":13,"total_pkg":"16薪","perf_system":"3.25 / 3.5 / 3.75 / 4","bonus_by_grade":{"3.25":"0个月","3.5":"3-4个月","3.75":"5.5-6.5个月","4":"8-10+个月"},"max_bonus_months":10,"notes":"3.75+另有长期激励25-50万"},
-  {"company":"蚂蚁集团","company_en":"Ant Group","category":"综合互联网","base_months":12,"total_pkg":"15薪","perf_system":"3.5 / 3.5+ / 3.75","bonus_by_grade":{"3.5":"2.5-3.5个月","3.5+":"3.5-5.5个月","3.75":"4.5-6个月"},"max_bonus_months":6,"notes":"≤17级13薪并入月薪；绩效股改季度归属"},
-  {"company":"京东","company_en":"JD.com","category":"电商","base_months":12,"total_pkg":"19-20薪","perf_system":"A+ / A / B+","bonus_by_grade":{"19薪部门B+":"7个月(19薪)","19薪部门A":"9个月(21薪)","19薪部门A+":"10个月(22薪)","20薪部门B+":"8个月(20薪)","20薪部门A+":"12个月(24薪)","采销":"平均25薪上不封顶"},"max_bonus_months":12,"notes":"2025年终奖总投入+70%；92%员工拿满或超额"},
-  {"company":"美团","company_en":"Meituan","category":"综合互联网","base_months":12,"total_pkg":"15.5薪","perf_system":"超出/符合/不及预期","bonus_by_grade":{"不及预期":"1.4-2.1个月","符合预期":"2.8-3.5个月","超出预期":"3.9-7个月"},"max_bonus_months":7,"notes":"年终基数3.5个月×绩效系数(0.4~2.0)"},
-  {"company":"百度","company_en":"Baidu","category":"综合互联网","base_months":12,"total_pkg":"16薪","perf_system":"E / M+ / M / M- / I","bonus_by_grade":{"I":"0个月(×0)","M-":"1.6个月(×0.4)","M":"3.2-4个月(×0.8-1.0)","M+":"4.8-5.6个月(×1.2-1.4)","E":"5.6-6.4个月(×1.4-1.6)"},"max_bonus_months":6.4,"notes":"年终基数=4个月×绩效系数"},
-  {"company":"快手","company_en":"Kuaishou","category":"综合互联网","base_months":12,"total_pkg":"16薪","perf_system":"S / A / B / C / D","bonus_by_grade":{"B":"2-5个月","A":"5-8个月","S":"8-12个月","S额外(7月)":"+3个月","A额外(7月)":"+1个月"},"max_bonus_months":15,"notes":"已改为五档；S/A额外奖金次年7月发放"},
-  {"company":"拼多多","company_en":"Pinduoduo","category":"电商","base_months":12,"total_pkg":"18薪","perf_system":"未公开","bonus_by_grade":{"年前固定":"2个月","年后绩效":"1-2个月"},"max_bonus_months":4,"notes":"高底薪策略；应届50-70万+"},
-  {"company":"小红书","company_en":"Xiaohongshu","category":"综合互联网","base_months":12,"total_pkg":"16薪","perf_system":"3.25 / 3.5 / 3.75 / 4 / 5","bonus_by_grade":{"<3.5":"仅13薪(1个月)","3.5":"3-5个月","3.75":"~8个月","4":"20+个月","5":"20个月+30个月期权"},"max_bonus_months":20,"notes":"高绩效回报极高但名额极少"},
-  {"company":"华为","company_en":"Huawei","category":"硬件/通信","base_months":12,"total_pkg":"14-16薪","perf_system":"A / B+ / B / C (361)","bonus_by_grade":{"C(10%)":"2-2.5个月","B(60%)":"2-3个月","B+(30%)":"3个月","A":"4-6个月","15级+":"5-12个月"},"max_bonus_months":12,"notes":"另有分红/TUP/ESOP；5月发放"},
-  {"company":"网易","company_en":"NetEase","category":"综合互联网","base_months":12,"total_pkg":"16薪","perf_system":"按部门绩效分配","bonus_by_grade":{"多数员工":"2-3个月","游戏高绩效":"可达18个月"},"max_bonus_months":18,"notes":"部门差异极大"},
-  {"company":"滴滴","company_en":"DiDi","category":"出行/旅游","base_months":12,"total_pkg":"15薪","perf_system":"S / A / B / C / D","bonus_by_grade":{"D":"1个月","C":"2个月","B":"4个月","A":"6个月","S":"10个月"},"max_bonus_months":10,"notes":"大部分人B/C档"},
-  {"company":"小米","company_en":"Xiaomi","category":"硬件/通信","base_months":12,"total_pkg":"14薪","perf_system":"未公开","bonus_by_grade":{"多数员工":"1-3个月","核心部门":"4-6个月"},"max_bonus_months":6,"notes":"16级起有股权"},
-  {"company":"B站","company_en":"Bilibili","category":"综合互联网","base_months":12,"total_pkg":"15薪","perf_system":"—","bonus_by_grade":{"范围":"0-6个月","平均":"~3个月"},"max_bonus_months":6,"notes":"2024Q3首次盈利"},
-  {"company":"携程","company_en":"Trip.com","category":"出行/旅游","base_months":12,"total_pkg":"14-15薪","perf_system":"A(5%) / B(60%) / C(30%) / D(5%)","bonus_by_grade":{"D":"0个月","C":"1个月","B":"1.5个月","A":"2个月"},"max_bonus_months":2,"notes":"年中+年末各发一次"},
-  {"company":"大疆","company_en":"DJI","category":"硬件/通信","base_months":15,"total_pkg":"18-21薪","perf_system":"按季度绩效","bonus_by_grade":{"T1-T2":"3-6个月","T3":"~6个月","T4-T6":"4-10+个月"},"max_bonus_months":10,"notes":"基础15薪；T5+有股票"},
-  {"company":"Shopee","company_en":"Shopee","category":"跨境","base_months":12,"total_pkg":"16.5薪","perf_system":"正常绩效","bonus_by_grade":{"正常绩效(满3年)":"4.5个月"},"max_bonus_months":4.5,"notes":"2025无普调"}
-]
-  </script>
-
-  <!-- Trends -->
-  <section class="trends" aria-label="行业趋势">
-    <div class="tc">
-      <h3>现金封顶 + 长期激励</h3>
-      <p>字节跳动2025年起现金封顶3个月，超出部分25%现金+75%期权/RSU，行业从短期现金激励转向长期股权绑定。</p>
-    </div>
-    <div class="tc">
-      <h3>头尾差距继续拉大</h3>
-      <p>京东年终奖总投入+70%、字节奖金池+35%，资源向高绩效集中。同一公司内头尾年终奖差距可达5-12倍。</p>
-    </div>
-    <div class="tc">
-      <h3>结构性调薪</h3>
-      <p>蚂蚁13薪并入月薪、腾讯服务奖并入月薪——"名义月数下降但月收入提升"成为薪酬结构优化新趋势。</p>
-    </div>
-    <div class="tc">
-      <h3>发放提速</h3>
-      <p>蚂蚁提前至2月底、快手1月底、京东年前发放。大厂争相提前年终奖发放时间以稳定人才。</p>
-    </div>
-  </section>
-
-</main>
-
-<footer class="footer">
-  <p>数据来源：公开媒体报道及社区分享，经多源交叉验证。实际薪酬因部门、职级、城市、个人谈判等因素会有差异。</p>
-  <p style="margin-top:6px">
-    Sources:
+<div class="note">
+  <p><strong>数据来源：</strong>
     <a href="https://zhuanlan.zhihu.com/p/1985657267593433957">知乎-字节薪酬变革</a> |
     <a href="https://finance.sina.com.cn/tech/digi/2025-12-25/doc-inhczakm3594578.shtml">新浪-京东年终奖</a> |
     <a href="https://zhuanlan.zhihu.com/p/1921163632974227345">知乎-腾讯薪资体系</a> |
@@ -595,39 +262,8 @@
     <a href="https://www.chinaventure.com.cn/news/78-20250123-384899.html">投中网</a> |
     <a href="https://www.21jingji.com/article/20250114/97febc7c1a7fb33b69bf3dfd300ce272.html">21经济网</a>
   </p>
-</footer>
+  <p>数据经多渠道交叉验证，仅供参考。实际薪酬因部门、职级、城市、个人谈判等因素存在差异。</p>
+</div>
 
-<script>
-function filt(c, el) {
-  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('on'));
-  el.classList.add('on');
-  document.querySelectorAll('#TB tr').forEach(r => {
-    r.style.display = (c === 'all' || r.dataset.cat === c) ? '' : 'none';
-  });
-}
-function search(q) {
-  q = q.toLowerCase();
-  document.querySelectorAll('#TB tr').forEach(r => {
-    r.style.display = r.dataset.co.toLowerCase().includes(q) ? '' : 'none';
-  });
-  if (q) document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('on'));
-  else document.querySelector('.fbtn').classList.add('on');
-}
-let ss = {};
-function srt(c) {
-  const tb = document.getElementById('TB'), rows = Array.from(tb.querySelectorAll('tr'));
-  const asc = ss[c] !== 'asc'; ss = {}; ss[c] = asc ? 'asc' : 'desc';
-  document.querySelectorAll('thead th').forEach(th => th.classList.remove('sorted'));
-  document.querySelector(`th[data-c="${c}"]`)?.classList.add('sorted');
-  rows.sort((a, b) => {
-    let va, vb;
-    if (c === 0) { va = a.dataset.co; vb = b.dataset.co; return asc ? va.localeCompare(vb,'zh') : vb.localeCompare(va,'zh'); }
-    const key = c === 1 ? 'base' : c === 2 ? 'total' : 'mx';
-    va = parseFloat(a.dataset[key]); vb = parseFloat(b.dataset[key]);
-    return asc ? va - vb : vb - va;
-  });
-  rows.forEach(r => tb.appendChild(r));
-}
-</script>
 </body>
 </html>
