@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>互联网大厂薪资 & 年终奖一览表（2024-2025）</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #1a1d2e;
+    --card-hover: #222640;
+    --border: #2a2e45;
+    --text: #e4e6f0;
+    --text-dim: #8b8fa8;
+    --accent: #6c5ce7;
+    --accent-light: #a29bfe;
+    --green: #00cec9;
+    --orange: #fdcb6e;
+    --red: #fd7979;
+    --blue: #74b9ff;
+    --pink: #fd79a8;
+    --teal: #55efc4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 60px 20px 40px;
+    background: linear-gradient(135deg, #1a1d2e 0%, #2d1b69 50%, #1a1d2e 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-size: 2.4em;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-light), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+  .hero p {
+    color: var(--text-dim);
+    font-size: 1.05em;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .hero .update-tag {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    background: rgba(108, 92, 231, 0.2);
+    border: 1px solid var(--accent);
+    color: var(--accent-light);
+    font-size: 0.85em;
+  }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+
+  /* Stats bar */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .stat-card .number {
+    font-size: 2em;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-light), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-card .label { color: var(--text-dim); font-size: 0.9em; margin-top: 4px; }
+
+  /* Filters */
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 28px;
+    align-items: center;
+  }
+  .filters label {
+    color: var(--text-dim);
+    font-size: 0.9em;
+    margin-right: 4px;
+  }
+  .filter-btn {
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 0.88em;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent-light); }
+  .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .search-box {
+    margin-left: auto;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    font-size: 0.9em;
+    outline: none;
+    width: 200px;
+    transition: border-color 0.2s;
+  }
+  .search-box:focus { border-color: var(--accent); }
+  .search-box::placeholder { color: var(--text-dim); }
+
+  /* Sort buttons */
+  .sort-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+  .sort-bar label { color: var(--text-dim); font-size: 0.9em; margin-right: 4px; }
+  .sort-btn {
+    padding: 5px 14px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 0.84em;
+    transition: all 0.2s;
+  }
+  .sort-btn:hover { border-color: var(--green); color: var(--green); }
+  .sort-btn.active { background: rgba(0,206,201,0.15); border-color: var(--green); color: var(--green); }
+  .sort-btn .arrow { margin-left: 4px; font-size: 0.8em; }
+
+  /* Main table */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: var(--card);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1100px;
+  }
+  thead th {
+    background: #1e2235;
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.88em;
+    color: var(--text-dim);
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s;
+  }
+  thead th:hover { color: var(--accent-light); }
+  thead th .sort-icon { margin-left: 4px; font-size: 0.8em; opacity: 0.4; }
+  thead th.sorted .sort-icon { opacity: 1; color: var(--green); }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  tbody tr:hover { background: var(--card-hover); }
+  tbody tr:last-child { border-bottom: none; }
+  td {
+    padding: 14px 16px;
+    font-size: 0.92em;
+    vertical-align: top;
+  }
+
+  .company-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 120px;
+  }
+  .company-logo {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.85em;
+    flex-shrink: 0;
+    color: #fff;
+  }
+  .company-name { font-weight: 600; white-space: nowrap; }
+  .company-en { color: var(--text-dim); font-size: 0.8em; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.82em;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .badge-green { background: rgba(0,206,201,0.15); color: var(--green); }
+  .badge-blue { background: rgba(116,185,255,0.15); color: var(--blue); }
+  .badge-orange { background: rgba(253,203,110,0.15); color: var(--orange); }
+  .badge-red { background: rgba(253,121,121,0.15); color: var(--red); }
+  .badge-purple { background: rgba(108,92,231,0.15); color: var(--accent-light); }
+  .badge-pink { background: rgba(253,121,168,0.15); color: var(--pink); }
+
+  .perf-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2px 8px;
+    font-size: 0.87em;
+  }
+  .perf-label { color: var(--text-dim); white-space: nowrap; }
+  .perf-value { color: var(--text); font-weight: 500; white-space: nowrap; }
+
+  .bar-cell { min-width: 140px; }
+  .bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .bar {
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--green));
+    transition: width 0.4s ease;
+    min-width: 4px;
+  }
+  .bar-label { font-weight: 600; font-size: 0.95em; white-space: nowrap; }
+
+  .note {
+    font-size: 0.82em;
+    color: var(--text-dim);
+    max-width: 220px;
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-dim);
+    font-size: 0.85em;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  .footer a { color: var(--accent-light); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  /* Trend section */
+  .trends {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 36px;
+  }
+  .trend-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+  }
+  .trend-card h3 {
+    font-size: 1em;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .trend-card h3 .icon { font-size: 1.2em; }
+  .trend-card p { color: var(--text-dim); font-size: 0.9em; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 1.6em; }
+    .filters { flex-direction: column; align-items: stretch; }
+    .search-box { margin-left: 0; width: 100%; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* Row highlight colors per category */
+  tr[data-category="internet"] td:first-child { border-left: 3px solid var(--accent); }
+  tr[data-category="hardware"] td:first-child { border-left: 3px solid var(--green); }
+  tr[data-category="ecommerce"] td:first-child { border-left: 3px solid var(--orange); }
+  tr[data-category="travel"] td:first-child { border-left: 3px solid var(--blue); }
+  tr[data-category="foreign"] td:first-child { border-left: 3px solid var(--pink); }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85em;
+    color: var(--text-dim);
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>互联网大厂薪资 & 年终奖一览表</h1>
+  <p>覆盖 18 家主流科技公司，包含基本薪资月数、绩效体系及年终奖对应月数</p>
+  <div class="update-tag">数据更新：2024-2025</div>
+</div>
+
+<div class="container">
+
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="number">18</div>
+      <div class="label">覆盖公司数</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">20薪</div>
+      <div class="label">最高总包（京东 A+）</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">48个月</div>
+      <div class="label">最高年终奖（腾讯游戏）</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">3-4月</div>
+      <div class="label">多数发放时间</div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <label>分类：</label>
+    <button class="filter-btn active" onclick="filterCategory('all')">全部</button>
+    <button class="filter-btn" onclick="filterCategory('internet')">综合互联网</button>
+    <button class="filter-btn" onclick="filterCategory('ecommerce')">电商</button>
+    <button class="filter-btn" onclick="filterCategory('hardware')">硬件/通信</button>
+    <button class="filter-btn" onclick="filterCategory('travel')">出行/旅游</button>
+    <button class="filter-btn" onclick="filterCategory('foreign')">跨境/外企</button>
+    <input type="text" class="search-box" placeholder="搜索公司名..." oninput="searchCompany(this.value)">
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>综合互联网</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--orange)"></div>电商</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>硬件/通信</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>出行/旅游</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--pink)"></div>跨境/外企</div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <table id="mainTable">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)" data-col="0">公司 <span class="sort-icon">&#9650;&#9660;</span></th>
+          <th onclick="sortTable(1)" data-col="1">基本薪资<br>(月数) <span class="sort-icon">&#9650;&#9660;</span></th>
+          <th onclick="sortTable(2)" data-col="2">标准总包<br>(月薪) <span class="sort-icon">&#9650;&#9660;</span></th>
+          <th>绩效体系</th>
+          <th>各档年终奖（月数）</th>
+          <th onclick="sortTable(5)" data-col="5">最高年终奖<br>(月) <span class="sort-icon">&#9650;&#9660;</span></th>
+          <th>备注</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+
+        <!-- 字节跳动 -->
+        <tr data-category="internet" data-company="字节跳动 ByteDance" data-base="12" data-total="15" data-max-bonus="9">
+          <td>
+            <div class="company-cell">
+              <div class="company-logo" style="background: linear-gradient(135deg, #3b82f6, #06b6d4);">字节</div>
+              <div><div class="company-name">字节跳动</div><div class="company-en">ByteDance</div></div>
+            </div>
+          </td>
+          <td><span class="badge badge-blue">12 个月</span></td>
+          <td class="bar-cell">
+            <div class="bar-wrap">
+              <div class="bar" style="width: 75%;"></div>
+              <span class="bar-label">15 薪</span>
+            </div>
+          </td>
+          <td><span class="badge badge-purple">M- / M / M+ / E</span></td>
+          <td>
+            <div class="perf-grid">
+              <span class="perf-label">M-</span><span class="perf-value">1.5 - 2 个月</span>
+              <span class="perf-label">M</span><span class="perf-value">3 个月</span>
+              <span class="perf-label">M+</span><span class="perf-value">4 - 4.5 个月</span>
+              <span class="perf-label">E</span><span class="perf-value">7 - 9 个月</span>
+            </div>
+          </td>
+          <td><span class="badge badge-green">9</span></td>
+          <td class="note">2025年起现金封顶3个月，高绩效额外发期权（2年按月归属）</td>
+        </tr>
+
+        <!-- 腾讯 -->
+        <tr data-category="internet" data-company="腾讯 Tencent" data-base="12" data-total="16" data-max-bonus="48">
+          <td>
+            <div class="company-cell">
+              <div class="company-logo" style="background: linear-gradient(135deg, #22c55e, #16a34a);">腾讯</div>
+              <div><div class="company-name">腾讯</div><div class="company-en">Tencent</div></div>
+            </div>
+          </td>
+          <td><span class="badge badge-blue">12 个月</span></td>
+          <td class="bar-cell">
+            <div class="bar-wrap">
+              <div class="bar" style="width: 80%;"></div>
+              <span class="bar-label">16 薪</span>
+            </div>
+          </td>
+          <td><span class="badge badge-purple">Outstanding / Good / Underperform</span></td>
+          <td>
+            <div class="perf-grid">
+              <span class="perf-label">Underperform</span><span class="perf-value">1.5 - 3 个月</span>
+              <span class="perf-label">Good</span><span class="perf-value">3 - 5 个月</span>
+              <span class="perf-label">Outstanding</span><span class="perf-value">8 - 10 个月</span>
+            </div>
+          </td>
+          <td><span class="badge badge-green">48</span></td>
+          <td class="note">游戏等利润部门可达 24-48 个月；含房补 4k/月</td>
+        </tr>
+
+        <!-- 阿里巴巴 -->
+        <tr data-category="ecommerce" data-company="阿里巴巴 Alibaba" data-base="13" data-total="16" data-max-bonus="10">
+          <td>
+            <div class="company-cell">
+              <div class="company-logo" style="background: linear-gradient(135deg, #f97316, #ea580c);">阿里</div>
+              <div><div class="company-name">阿里巴巴</div><div class="company-en">Alibaba</div></div>
+            </div>
+          </td>
+          <td><span class="badge badge-blue">13 个月</span></td>
+          <td class="bar-cell">
+            <div class="bar-wrap">
+              <div class="bar" style="width: 80%;"></div>
+              <span class="bar-label">16 薪</span>
+            </div>
+          </td>
+          <td><span class="badge badge-purple">3.25 / 3.5 / 3.75 / 4</span></td>
+          <td>
+            <div class="perf-grid">
+              <span class="perf-label">3.25</span><span class="perf-value" style="color:var(--red)">0 个月</span>
+              <span class="perf-label">3.5</span><span class="perf-value">3 - 5 个月</span>
+              <span class="perf-label">3.75</span><span class="perf-value">6 - 9 个月</span>
+              <span class="perf-label">4</span><span class="perf-value">10+ 个月</span>
+            </div>
+          </td>
+          <td><span class="badge badge-green">10+</span></td>
+          <td class="note">3.75及以上另有股票激励；60%拿3.5，30%拿3.75</td>
+        </tr>
+
+        <!-- 蚂蚁集团 -->
+        <tr data-category="internet" data-company="蚂蚁集团 Ant Group" data-base="12" data-total="15" data-max-bonus="6">
+          <td>
+            <div class="company-cell">
+              <div class="company-logo" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">蚂蚁</div>
+              <div><div class="company-name">蚂蚁集团</div><div class="company-en">Ant Group</div></div>
+            </div>
+          </td>
+          <td><span class="badge badge-blue">12 个月</span></td>
+          <td class="bar-cell">
+            <div class="bar-wrap">
+              <div class="bar" style="width: 75%;"></div>
+              <span class="bar-label">15 薪</span>
+            </div>
+          </td>
+          <td><span class="badge badge-purple">3.5 / 3.5+ / 3.75</span></td>
+          <td>
+            <div class="perf-grid">
+              <span class="perf-label">3.5</span><span class="perf-value">2.5 - 3.5 个月</span>
+              <span class="perf-label">3.5+</span><span class="perf-value">3.5 - 5.5 个月</span>
+              <span class="perf-label">3.75</span><span class="perf-value">4.5 - 6 个月</span>
+            </div>
+          </td>
+          <td><span class="badge badge-green">6</span></td>
+          <td class="note">2025年结构调整 16薪→15薪；年终奖提前至2月底发放；3.75另有期权约4000股</td>
+        </tr>
+
+        <!-- 京东 -->
+        <tr data-category="ecommerce" data-company="京东 JD.com" data-base="12" data-total="17" data-max-bonus="8">
+          <td>
+            <div class="company-cell">
+              <div class="company-logo" style="background: linear-gradient(135deg, #ef4444, #dc2626);">京东</div>
+              <div><div class="company-name">京东</div><div class="company-en">JD.com</div></div>
+            </div>
+          </td>
+          <td><span class="badge badge-blue">12 个月</span></td>
+          <td class="bar-cell">
+            <div class="bar-wrap">
+              <div class="bar" style="width: 85%;"></div>
+              <span class="bar-label">17 薪</span>
+            </div>
+          </td>
+          <td><span class="badge badge-purple">A+ / A / B+ / B-</span></td>
+          <td>
+            <div class="perf-grid">
+              <span class="perf-label">B-</span><span class="perf-value">3 个月</span>
+              <span class="perf-label">B+</span><span class="perf-value">5 个月 (17薪)</span>
+              <span class="perf-label">A</span><span class="perf-value">6.5 个月 (18.5薪)</span>
+              <span class="perf-label">A+</span><span class="perf-value">8 个月 (20薪)</span>
+            </div>
+          </td>
+          <td><span class="badge badge-green">8</span></td>
+          <td class="note">采销岗上不封顶；2026年预计最高达 26 薪</td>
+        </tr>
+
+        <!-- 美团 -->
+        <tr data-category="internet" data-company="美团 Meituan" data-base="12" data-total="15.5" data-max-bonus="7">
+          <td>
+            <div class="company-cell">
+              <div class="company-logo" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">美团</div>
+              <div><div class="company-name">美团</div><div class="company-en">Meituan</div></div>
+            </div>
+          </td>
+          <td><span class="badge badge-blue">12 个月</span></td>
+          <td class="bar-cell">
+            <div class="bar-wrap">
+              <div class="bar" style="width: 77%;"></div>
+              <span class="bar-label">15.5 薪</span>
+            </div>
+          </td>
+          <td><span class="badge badge-purple">超出预期 / 符合预期 / 不及预期</span></td>
+          <td>
+            <div class="perf-grid">
+              <span class="perf-label">不及预期</span><span class="perf-value">1.4 - 2.1 个月</span>
+              <span class="perf-label">符合预期</span><span class="perf-value">2.8 - 3.5 个月</span>
+              <span class="perf-label">超出预期</span><span class="perf-value">3.9 - 7 个月</span>
+            </div>
+          </td>
+          <td><span class="badge badge-green">7</span></td>
+          <td class="note">基数 3.5 个月 × 绩效系数（0.4~2.0）</td>
+        </tr>
+
+        <!-- 百度 -->
+        <tr data-category="internet" data-company="百度 Baidu" data-base="12" data-total="14.6" data-max-bonus="6.4">
+          <td>
+            <div class="company-cell">
+              <div class="company-logo" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">百度</div>
+              <div><div class="company-name">百度</div><div class="company-en">Baidu</div></div>
+            </div>
+          </td>
+          <td><span class="badge badge-blue">12 个月</span></td>
+          <td class="bar-cell">
+            <div class="bar-wrap">
+              <div class="bar" style="width: 73%;"></div>
+              <span class="bar-label">14.6 薪</span>
+            </div>
+          </td>
+          <td><span class="badge badge-purple">E / M+ / M / M- / I</span></td>
+          <td>
+            <div class="perf-grid">
+              <span class="perf-label">I</span><span class="perf-value" style="color:var(--red)">0 个月</span>
+              <span class="perf-label">M-</span><span class="perf-value">1.6 个月</span>
+              <span class="perf-label">M</span><span class="perf-value">3.2 - 4 个月</span>
+              <span class="perf-label">M+</span><span class="perf-value">4.8 - 5.6 个月</span>
+              <span class="perf-label">E</span><span class="perf-value">5.6 - 6.4 个月</span>
+            </div>
+          </td>
+          <td><span class="badge badge-green">6.4</span></td>
+          <td class="note">标准年终奖基数 4 个月 × 绩效系数；I 档无年终奖</td>
+        </tr>
+
+        <!-- 快手 -->
+        <tr data-category="internet" data-company="快手 Kuaishou" data-base="12" data-total="15.8" data-max-bonus="6">
+          <td>
+            <div class="company-cell">
+              <div class="company-logo" style="background: linear-gradient(135deg, #f97316, #fb923c);">快手</div>
+              <div><div class="company-name">快手</div><div class="company-en">Kuaishou</div></div>
+            </div>
+          </td>
+          <td><span class="badge badge-blue">12 个月</span></td>
+          <td class="bar-cell">
+            <div class="bar-wrap">
+              <div class="bar" style="width: 79%;"></div>
+              <span class="bar-label">15.8 薪</span>
+            </div>
+          </td>
+          <td><span class="badge badge-purple">A / B+ / B / B-</span></td>
+          <td>
+            <div class="perf-grid">
+              <span class="perf-label">B-</span><span class="perf-value">3 - 3.3 个月</span>
+              <span class="perf-label">B</span><span class="perf-value">3.8 - 4 个月</span>
+              <span class="perf-label">B+</span><span class="perf-value">~5.5 个月</span>
+              <span class="perf-label">A</span><span class="perf-value">5 - 6 个月</span>
+            </div>
+          </td>
+          <td><span class="badge badge-green">6</span></td>
+          <td class="note">—</td>
+        </tr>
+
+        <!-- 拼多多 -->
+        <tr data-category="ecommerce" data-company="拼多多 Pinduoduo" data-base="12" data-total="18" data-max-bonus="6">
+          <td>
+            <div class="company-cell">
+              <div class="company-logo" style="background: linear-gradient(135deg, #ef4444, #f97316);">拼多多</div>
+              <div><div class="company-name">拼多多</div><div class="company-en">Pinduoduo</div></div>
+            </div>
+          </td>
+          <td><span class="badge badge-blue">12 个月</span></td>
+          <td class="bar-cell">
+            <div class="bar-wrap">
+              <div class="bar" style="width: 90%;"></div>
+              <span class="bar-label">18 薪</span>
+            </div>
+          </td>
+          <td><span class="badge badge-purple">未公开分档</span></td>
+          <td>
+            <div class="perf-grid">
+              <span class="perf-label">年前固定</span><span class="perf-value">2 个月</span>
+              <span class="perf-label">年后绩效</span><span class="perf-value">1 - 2 个月</span>
+              <span class="perf-label">季度奖</span><span class="perf-value">~2 - 3 个月</span>
+            </div>
+          </td>
+          <td><span class="badge badge-green">6</span></td>
+          <td class="note">以高底薪著称，应届年薪 50-70 万+；工作强度大（均62.4h/周）</td>
+        </tr>
+
+        <!-- 小红书 -->
+        <tr data-category="internet" data-company="小红书 Xiaohongshu" data-base="12" data-total="15.5" data-max-bonus="3.5">
+          <td>
+            <div class="company-cell">
+              <div class="company-logo" style="background: linear-gradient(135deg, #ef4444, #ec4899);">小红书</div>
+              <div><div class="company-name">小红书</div><div class="company-en">Xiaohongshu</div></div>
+            </div>
+          </td>
+          <td><span class="badge badge-blue">12 个月</span></td>
+          <td class="bar-cell">
+            <div class="bar-wrap">
+              <div class="bar" style="width: 77%;"></div>
+              <span class="bar-label">15.5 薪</span>
+            </div>
+          </td>
+          <td><span class="badge badge-purple">3.25 / 3.5 / 3.75 / 4</span></td>
+          <td>
+            <div class="perf-grid">
+              <span class="perf-label">&lt; 3.5</span><span class="perf-value" style="color:var(--red)">仅双薪 1 个月</span>
+              <span class="perf-label">≥ 3.5</span><span class="perf-value">1 双薪 + 2.5 奖金</span>
+            </div>
+          </td>
+          <td><span class="badge badge-green">3.5</span></td>
+          <td class="note">12 + 1(双薪) + 2.5(奖金)；房补 1k/月；有大小周</td>
+        </tr>
+
+        <!-- 华为 -->
+        <tr data-category="hardware" data-company="华为 Huawei" data-base="12" data-total="15" data-max-bonus="12">
+          <td>
+            <div class="company-cell">
+              <div class="company-logo" style="background: linear-gradient(135deg, #ef4444, #991b1b);">华为</div>
+              <div><div class="company-name">华为</div><div class="company-en">Huawei</div></div>
+            </div>
+          </td>
+          <td><span class="badge badge-blue">12 个月</span></td>
+          <td class="bar-cell">
+            <div class="bar-wrap">
+              <div class="bar" style="width: 75%;"></div>
+              <span class="bar-label">15 薪</span>
+            </div>
+          </td>
+          <td><span class="badge badge-purple">A / B+ / B / C（361体系）</span></td>
+          <td>
+            <div class="perf-grid">
+              <span class="perf-label">C</span><span class="perf-value">2 - 2.5 个月</span>
+              <span class="perf-label">B</span><span class="perf-value">2 - 3 个月</span>
+              <span class="perf-label">B+</span><span class="perf-value">3 个月</span>
+              <span class="perf-label">A</span><span class="perf-value">4 - 6 个月</span>
+              <span class="perf-label">15级+</span><span class="perf-value">5 - 12 个月</span>
+            </div>
+          </td>
+          <td><span class="badge badge-green">12</span></td>
+          <td class="note">另有分红/TUP/虚拟股；5月发放；高级别奖金取决于部门奖金包</td>
+        </tr>
+
+        <!-- 网易 -->
+        <tr data-category="internet" data-company="网易 NetEase" data-base="12" data-total="16" data-max-bonus="18">
+          <td>
+            <div class="company-cell">
+              <div class="company-logo" style="background: linear-gradient(135deg, #dc2626, #b91c1c);">网易</div>
+              <div><div class="company-name">网易</div><div class="company-en">NetEase</div></div>
+            </div>
+          </td>
+          <td><span class="badge badge-blue">12 个月</span></td>
+          <td class="bar-cell">
+            <div class="bar-wrap">
+              <div class="bar" style="width: 80%;"></div>
+              <span class="bar-label">16 薪</span>
+            </div>
+          </td>
+          <td><span class="badge badge-purple">按部门绩效分配</span></td>
+          <td>
+            <div class="perf-grid">
+              <span class="perf-label">多数员工</span><span class="perf-value">2 - 3 个月</span>
+              <span class="perf-label">游戏高绩效</span><span class="perf-value">可达 18 个月</span>
+            </div>
+          </td>
+          <td><span class="badge badge-green">18</span></td>
+          <td class="note">部门差异极大；游戏部门远高于平均</td>
+        </tr>
+
+        <!-- 滴滴 -->
+        <tr data-category="travel" data-company="滴滴 DiDi" data-base="12" data-total="15" data-max-bonus="10">
+          <td>
+            <div class="company-cell">
+              <div class="company-logo" style="background: linear-gradient(135deg, #f97316, #ea580c);">滴滴</div>
+              <div><div class="company-name">滴滴</div><div class="company-en">DiDi</div></div>
+            </div>
+          </td>
+          <td><span class="badge badge-blue">12 个月</span></td>
+          <td class="bar-cell">
+            <div class="bar-wrap">
+              <div class="bar" style="width: 75%;"></div>
+              <span class="bar-label">15 薪</span>
+            </div>
+          </td>
+          <td><span class="badge badge-purple">S / A / B / C / D</span></td>
+          <td>
+            <div class="perf-grid">
+              <span class="perf-label">D</span><span class="perf-value">1 个月</span>
+              <span class="perf-label">C</span><span class="perf-value">2 个月</span>
+              <span class="perf-label">B</span><span class="perf-value">4 个月</span>
+              <span class="perf-label">A</span><span class="perf-value">6 个月</span>
+              <span class="perf-label">S</span><span class="perf-value">10 个月</span>
+            </div>
+          </td>
+          <td><span class="badge badge-green">10</span></td>
+          <td class="note">大部分人集中在 B 和 C 档</td>
+        </tr>
+
+        <!-- 小米 -->
+        <tr data-category="hardware" data-company="小米 Xiaomi" data-base="12" data-total="14" data-max-bonus="6">
+          <td>
+            <div class="company-cell">
+              <div class="company-logo" style="background: linear-gradient(135deg, #f97316, #fbbf24);">小米</div>
+              <div><div class="company-name">小米</div><div class="company-en">Xiaomi</div></div>
+            </div>
+          </td>
+          <td><span class="badge badge-blue">12 个月</span></td>
+          <td class="bar-cell">
+            <div class="bar-wrap">
+              <div class="bar" style="width: 70%;"></div>
+              <span class="bar-label">14 薪</span>
+            </div>
+          </td>
+          <td><span class="badge badge-purple">未公开详细分档</span></td>
+          <td>
+            <div class="perf-grid">
+              <span class="perf-label">多数员工</span><span class="perf-value">1 - 3 个月</span>
+              <span class="perf-label">核心部门</span><span class="perf-value">4 - 6 个月</span>
+            </div>
+          </td>
+          <td><span class="badge badge-green">6</span></td>
+          <td class="note">—</td>
+        </tr>
+
+        <!-- B站 -->
+        <tr data-category="internet" data-company="B站 Bilibili" data-base="12" data-total="15" data-max-bonus="3">
+          <td>
+            <div class="company-cell">
+              <div class="company-logo" style="background: linear-gradient(135deg, #ec4899, #f472b6);">B站</div>
+              <div><div class="company-name">B站</div><div class="company-en">Bilibili</div></div>
+            </div>
+          </td>
+          <td><span class="badge badge-blue">12 个月</span></td>
+          <td class="bar-cell">
+            <div class="bar-wrap">
+              <div class="bar" style="width: 75%;"></div>
+              <span class="bar-label">15 薪</span>
+            </div>
+          </td>
+          <td><span class="badge badge-purple">—</span></td>
+          <td>
+            <div class="perf-grid">
+              <span class="perf-label">一般</span><span class="perf-value">~3 个月</span>
+            </div>
+          </td>
+          <td><span class="badge badge-green">3</span></td>
+          <td class="note">—</td>
+        </tr>
+
+        <!-- 携程 -->
+        <tr data-category="travel" data-company="携程 Trip.com" data-base="12" data-total="15" data-max-bonus="2">
+          <td>
+            <div class="company-cell">
+              <div class="company-logo" style="background: linear-gradient(135deg, #3b82f6, #6366f1);">携程</div>
+              <div><div class="company-name">携程</div><div class="company-en">Trip.com</div></div>
+            </div>
+          </td>
+          <td><span class="badge badge-blue">12 个月</span></td>
+          <td class="bar-cell">
+            <div class="bar-wrap">
+              <div class="bar" style="width: 75%;"></div>
+              <span class="bar-label">15 薪</span>
+            </div>
+          </td>
+          <td><span class="badge badge-purple">A(5%) / B(60%) / C(30%) / D(5%)</span></td>
+          <td>
+            <div class="perf-grid">
+              <span class="perf-label">D</span><span class="perf-value" style="color:var(--red)">0 个月</span>
+              <span class="perf-label">C</span><span class="perf-value">1 个月</span>
+              <span class="perf-label">B</span><span class="perf-value">1.5 个月</span>
+              <span class="perf-label">A</span><span class="perf-value">2 个月</span>
+            </div>
+          </td>
+          <td><span class="badge badge-green">2</span></td>
+          <td class="note">分年中 + 年末两次发放；每次约半数</td>
+        </tr>
+
+        <!-- Shopee -->
+        <tr data-category="foreign" data-company="Shopee 虾皮" data-base="12" data-total="16.5" data-max-bonus="4.5">
+          <td>
+            <div class="company-cell">
+              <div class="company-logo" style="background: linear-gradient(135deg, #f97316, #ef4444);">虾皮</div>
+              <div><div class="company-name">Shopee</div><div class="company-en">虾皮</div></div>
+            </div>
+          </td>
+          <td><span class="badge badge-blue">12 个月</span></td>
+          <td class="bar-cell">
+            <div class="bar-wrap">
+              <div class="bar" style="width: 82%;"></div>
+              <span class="bar-label">16.5 薪</span>
+            </div>
+          </td>
+          <td><span class="badge badge-purple">正常绩效</span></td>
+          <td>
+            <div class="perf-grid">
+              <span class="perf-label">正常绩效(满3年)</span><span class="perf-value">4.5 个月</span>
+            </div>
+          </td>
+          <td><span class="badge badge-green">4.5</span></td>
+          <td class="note">2025年无薪资普调</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Trends -->
+  <div class="trends">
+    <div class="trend-card">
+      <h3><span class="icon">&#x1F4B0;</span> 现金封顶 + 期权补充</h3>
+      <p>字节跳动 2025 年起现金年终奖封顶 3 个月，高绩效改发期权。行业可能跟进此趋势，将短期现金激励转向长期股权绑定。</p>
+    </div>
+    <div class="trend-card">
+      <h3><span class="icon">&#x1F4C8;</span> 头尾差距拉大</h3>
+      <p>同一公司内头部和尾部绩效的年终奖差距可达 5-10 倍，"阳光普照"式年终奖逐渐被"精准滴灌"取代。</p>
+    </div>
+    <div class="trend-card">
+      <h3><span class="icon">&#x1F3AE;</span> 部门差异巨大</h3>
+      <p>腾讯游戏、网易游戏等利润中心年终奖远超平均，游戏部门可达标准部门的 5-10 倍。</p>
+    </div>
+    <div class="trend-card">
+      <h3><span class="icon">&#x1F4C5;</span> 发放时间</h3>
+      <p>多数公司 3-4 月发放。蚂蚁提前至 2 月底，华为 5 月发放。京东采销等岗位有季度奖金，更加灵活。</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>数据来源：公开媒体报道及社区分享，仅供参考，实际薪酬因部门、职级、城市、个人谈判等因素会有差异</p>
+  <p style="margin-top: 8px;">
+    Sources:
+    <a href="https://www.chinaventure.com.cn/news/78-20240221-379774.html" target="_blank">投中网</a> |
+    <a href="https://www.21jingji.com/article/20250114/97febc7c1a7fb33b69bf3dfd300ce272.html" target="_blank">21经济网</a> |
+    <a href="https://www.woshipm.com/zhichang/6174721.html" target="_blank">人人都是产品经理</a> |
+    <a href="https://blog.csdn.net/m0_58552717/article/details/144592251" target="_blank">CSDN</a> |
+    <a href="https://news.qq.com/rain/a/20241223A09WFT00" target="_blank">腾讯新闻</a> |
+    <a href="https://blog.csdn.net/emprere/article/details/147801950" target="_blank">蚂蚁集团年终奖</a> |
+    <a href="https://www.xiaolincoding.com/salary/class_2026.html" target="_blank">小林coding</a>
+  </p>
+</div>
+
+<script>
+  // Filter by category
+  function filterCategory(cat) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    document.querySelectorAll('#tableBody tr').forEach(row => {
+      if (cat === 'all' || row.dataset.category === cat) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  }
+
+  // Search
+  function searchCompany(query) {
+    const q = query.toLowerCase();
+    document.querySelectorAll('#tableBody tr').forEach(row => {
+      const name = row.dataset.company.toLowerCase();
+      row.style.display = name.includes(q) ? '' : 'none';
+    });
+    // Reset category filter
+    if (q) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    } else {
+      document.querySelector('.filter-btn').classList.add('active');
+    }
+  }
+
+  // Sort table
+  let sortState = {};
+  function sortTable(colIndex) {
+    const tbody = document.getElementById('tableBody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const asc = sortState[colIndex] !== 'asc';
+    sortState = {};
+    sortState[colIndex] = asc ? 'asc' : 'desc';
+
+    // Update header styles
+    document.querySelectorAll('thead th').forEach(th => th.classList.remove('sorted'));
+    document.querySelector(`thead th[data-col="${colIndex}"]`)?.classList.add('sorted');
+
+    rows.sort((a, b) => {
+      let va, vb;
+      switch(colIndex) {
+        case 0: // Company name
+          va = a.dataset.company;
+          vb = b.dataset.company;
+          return asc ? va.localeCompare(vb, 'zh') : vb.localeCompare(va, 'zh');
+        case 1: // Base
+          va = parseFloat(a.dataset.base);
+          vb = parseFloat(b.dataset.base);
+          break;
+        case 2: // Total
+          va = parseFloat(a.dataset.total);
+          vb = parseFloat(b.dataset.total);
+          break;
+        case 5: // Max bonus
+          va = parseFloat(a.dataset.maxBonus);
+          vb = parseFloat(b.dataset.maxBonus);
+          break;
+        default:
+          return 0;
+      }
+      return asc ? va - vb : vb - va;
+    });
+
+    rows.forEach(row => tbody.appendChild(row));
+  }
+</script>
+
+</body>
+</html>
